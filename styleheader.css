@@ -1,0 +1,42 @@
+body {
+  background: url(img/background.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.signupbox{
+    float: none;
+    margin: 150px auto;
+    background: rgba(225,225,225,0.7);
+    padding: 30px;
+    border-radius: 5px 5px 5px 5px;
+    align-items: center;
+    align-content: center;
+}
+
+.form-inline {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+.form-inline input {
+  vertical-align: middle;
+  margin: 5px 10px 5px 10px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+.loginbox{
+  position:absolute;
+   top:10px;
+   right:100px;
+
+}
+#signupbtn{
+  position:absolute;
+   top:14px;
+   right:10px;
+
+}
