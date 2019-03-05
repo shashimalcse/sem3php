@@ -49,7 +49,11 @@ function initMap() {
      var infoWindow = new google.maps.InfoWindow();
      var latlngbounds = new google.maps.LatLngBounds();
      var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+     var marker=new google.maps.Marker({position:{lat:7.927818456366202, lng:80.67881188707315}, map: map});
      google.maps.event.addListener(map, 'click', function (e) {
+          marker.setMap(null);
+          var geo = {lat:e.latLng.lat() , lng:  e.latLng.lng()};
+          marker = new google.maps.Marker({position: geo, map: map});
           document.getElementById("Latitude").value = e.latLng.lat() ;
           document.getElementById("Longitude").value =  e.latLng.lng();
      });
@@ -72,7 +76,7 @@ src="https://maps.googleapis.com/maps/api/js?keyAIzaSyBByZ9yBJHULD6Va0HlE_vNvfRU
               <input type="text" name="shopaddress" class="form-control" placeholder="Address">
             </div>
             <div class="form-group">
-              <input type="button" class="btn btn-primary" value="Get Location" onclick="getLocationConstant()" />
+              <input type="button" class="btn btn-primary" value="Get Your Location" onclick="getLocationConstant()" />
             </div>
             <div class="form-group">
               <input type="number" step="any" id="Latitude" name="shopLatitude"  class="form-control" value="">
