@@ -30,6 +30,7 @@ function getLocationConstant() {
 
 // If we have a successful location update
 function onGeoSuccess(event) {
+
     document.getElementById("Latitude").value = event.coords.latitude;
     document.getElementById("Longitude").value = event.coords.longitude;
 
