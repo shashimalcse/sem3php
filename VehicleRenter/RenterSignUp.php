@@ -13,30 +13,8 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-    <style media="screen">
- 
-    .column {
-      float: left;
-      width: 50%;
-      top:10px;
-            }
-            body, html {
-  height: 100%;
-}
-
-body { 
-  /* The image used */
-    background-image:url('blur_colors-1920x1080.jpg');
-    background-attachment:fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-blend-mode: screen;
-}
-
-   
+    <link rel="stylesheet" href="RenterSignUpstyle.css">
     
-    </style>
     
 
    
@@ -46,12 +24,12 @@ body {
 <body>
 <div class="bg">
 <div class="container">
-<h3>Vehicle Rental SignUp</h3>
-Fill the following form: <br><br>
+<h1>Vehicle Rental SignUp</h1>
+<br><br>
 </div>
 
-
-<form method = "post" action="RenterSignUpDb.php" style="width: 500px; margin:auto">
+<div class="form">
+<form method = "post" action="RenterSignUpDb.php" >
         <label for="username">Username:</label>
         <br>
         <input type="text" name="username" id="username" autocomplete="on" class="form-control" required >
@@ -68,22 +46,29 @@ Fill the following form: <br><br>
         <label for="address">Address :</label> 
         <input type="text" name="address" id="address" class="form-control"  >
         <br>
+        <br>
 <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->        
         Location: 
         <button type="button" name="getLocation" class="btn btn-primary" onclick="unhideFunction()" >Get location</button>
-        <br><br><br><br><br>
+        <br><br>
 
-    <div id ="hideLocation" class="container" style="display: none;" >
-        <div class="row" style="width: 700px; height: 500px;">
+    <div id ="hideLocation" class="mapcontainer" style="display: none;" >
+        <div class="row">
+                <div id="dvMap" style="width: 500px; height: 500px; margin-left: 2%;
+  margin-right: 2%;
+  margin-top: 2%;">
+                </div>
+        </div><br><br>
+        <div class="row">
 
-            <div class="column">
+            <div class="locationColumn">
                 <div class="header-marker" >
                     <div class="col-md-5 signupbox">
                         <div class="form-group">
-                        <input type="number" step="any" id="Latitude" name="shopLatitude"  class="form-control" value="">
+                        <input type="number" step="any" id="Latitude" name="shopLatitude"  class="location" value="">
                         </div>
                         <div class="form-group">
-                        <input type="number" step="any" id="Longitude" name="shopLongitude"  class="form-control" value="">
+                        <input type="number" step="any" id="Longitude" name="shopLongitude"  class="location" value="">
                         </div>
                         <div class="form-group">
                         <input type="button" class="btn btn-primary" value="Current Position" onclick="getLocationConstant()" />
@@ -93,12 +78,10 @@ Fill the following form: <br><br>
             </div>
 
 
-            <div class="column">
-                <div id="dvMap" style="width: 500px; height: 500px;">
-                </div>
-            </div>
+            
 
         </div>
+        
     </div>
 
         
@@ -120,6 +103,7 @@ Fill the following form: <br><br>
 
      
     </form>
+    </div>
     <br><br>
 
     </div>

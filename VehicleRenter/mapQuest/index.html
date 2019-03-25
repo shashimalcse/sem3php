@@ -26,28 +26,14 @@
           zoom: 12,
           
         });
-        // var locator_options = {
-        //                     className: '',
-        //                     enableHighAccuracy: true,
-        //                     markerPrimaryColor: '#ff0000',
-        //                     markerSecondaryColor: '#8b0000',
-        //                     maximumAge: 0,
-        //                     position: 'bottomright',
-        //                     timeout: 5000,
-        //                     title: 'Locator',
-        //                     zoom: 16
-        //                     }
-
         
-        // map.addControl(L.mapquest.locatorControl(locator_options));
-        //map.addControl(L.mapquest.navigationControl());
         map.addControl(L.mapquest.geocodingControl({position: 'topright',
                         searchAhead: true,
                         searchAheadOptions: {countryCode: 'LK',}
                         })
                         );
         map.addControl(L.mapquest.control({position: 'bottomright',}));
-       
+        
                                                     
 
         let directionsControl = L.mapquest.directionsControl({
@@ -122,6 +108,9 @@
 
 
       }
+
+
+    
     </script>
 
     
