@@ -1,130 +1,121 @@
 <!DOCTYPE html>
 <html>
-<head>
+
 <head>
     <meta charset="utf-8">
     <meta name=viewport content="width=divice-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style media="screen">
     .column {
-      float: left;
-      width: 50%;
-      top:10px;
+        float: left;
+        width: 50%;
+        top: 10px;
 
 
-}
-    </style>
-    
-</head>
-<body>
-<button type="button" name="getLocation" onclick="unhideFunction()" >get location</button>
-        <div id="hideLocation" style="display: none;">
-        <div class="container">
-      <div class="row">
-
-      <div class="column">
-        <div class="header-marker" >
-          <div class="col-md-5 signupbox">
-          <form class="form-markers" action="includes/markers.inc.php" method="post">
-            <div class="form-group">
-              <input type="text" name="shopname" class="form-control" placeholder="Name">
-            </div>
-            <div class="form-group">
-              <input type="text" name="shopaddress" class="form-control" placeholder="Address">
-            </div>
-            <div class="form-group">
-              <input type="button" class="btn btn-primary" value="Get Location" onclick="getLocationConstant()" />
-            </div>
-            <div class="form-group">
-              <input type="number" step="any" id="Latitude" name="shopLatitude"  class="form-control" value="">
-            </div>
-            <div class="form-group">
-              <input type="number" step="any" id="Longitude" name="shopLongitude"  class="form-control" value="">
-            </div>
-            <div class="form-group">
-              <select name="shopcategory" class="form-control" required >
-                    <option value="Liquor Bar">Bar</option>
-                    <option value="Juice Bar">Juice bar</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <button type="submit" name="marker-submit" class="btn btn-primary">OK</button>
-            </div>
-
-
-          </form>
-
-        </div>
-
-
-
-
-
-        </div>
-      </div>
-      <div class="column">
-        <div id="dvMap" style="width: 500px; height: 500px">
-      </div>
-      </div>
-
-      </div>
-    </div>
-            
-            </div>
-
-
-
-<script>
-
-function unhideFunction() {
-  
-  var divelement= document.getElementById("hideLocation");
-        if(divelement.style.display == 'none' )
-            divelement.style.display = 'block';
-        
-            function getLocationConstant() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError);
-    } else {
-        alert("Your browser or device doesn't support Geolocation");
     }
-}
+    </style>
 
-// If we have a successful location update
-function onGeoSuccess(event) {
-    document.getElementById("Latitude").value = event.coords.latitude;
-    document.getElementById("Longitude").value = event.coords.longitude;
+</head>
+
+<body>
+    <div id="test" class="hello"></div>
+    <div class="form-group">
+        <label for="vehicleType">Select Vehicle Type : </label>
+        <select name="vehicleType" id="vehicleType" class="custom-select">
+            <option selected>Choose one</option>
+            <option value="Car">Car</option>
+            <option value="Van">Van</option>
+            <option value="SUV">SUV</option>
+            <option value="Cab">Cab</option>
+            <option value="Bike">Bike</option>
+            <option value="Bus">Bus</option>
+        </select>
+    </div>
+    <button type="button" name="getLocation" onclick="unhideFunction()">get location</button>
+    <div id="hideLocation" style="display: none;">
+        <div class="container">
+            <div class="row">
+
+                <div class="column">
+                    <div class="header-marker">
+                        <div class="col-md-5 signupbox">
+                            <form class="form-markers" action="includes/markers.inc.php" method="post">
+                                <div class="form-group">
+                                    <input type="text" name="shopname" class="form-control" placeholder="Name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="shopaddress" class="form-control" placeholder="Address">
+                                </div>
+                                <div class="form-group">
+                                    <input type="button" class="btn btn-primary" value="Get Location"
+                                        onclick="getLocationConstant()" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" step="any" id="Latitude" name="shopLatitude"
+                                        class="form-control" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" step="any" id="Longitude" name="shopLongitude"
+                                        class="form-control" value="">
+                                </div>
+                                <div class="form-group">
+                                    <select name="shopcategory" class="form-control" required>
+                                        <option value="Liquor Bar">Bar</option>
+                                        <option value="Juice Bar">Juice bar</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" name="marker-submit" class="btn btn-primary">OK</button>
+                                </div>
 
 
-}
+                            </form>
 
-// If something has gone wrong with the geolocation request
-function onGeoError(event) {
-    alert("Error code " + event.code + ". " + event.message);
-}
-function initMap() {
-     var mapOptions = {
-         center: new google.maps.LatLng(7.927818456366202, 80.67881188707315),
-         zoom: 8,
+                        </div>
 
-     };
-     var infoWindow = new google.maps.InfoWindow();
-     var latlngbounds = new google.maps.LatLngBounds();
-     var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
-     google.maps.event.addListener(map, 'click', function (e) {
-          document.getElementById("Latitude").value = e.latLng.lat() ;
-          document.getElementById("Longitude").value =  e.latLng.lng();
-     });
- }
 
-}
-</script>
-<script async defer
-src="https://maps.googleapis.com/maps/api/js?keyAIzaSyBByZ9yBJHULD6Va0HlE_vNvfRUvohhxNQ&callback=initMap">
-</script>
+
+
+
+                    </div>
+                </div>
+                <div class="column">
+                    <div id="dvMap" style="width: 500px; height: 500px">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 
 
 
     
+
+    <?php
+    $dom = new DOMDocument();
+    //$dom->validate();
+    try {
+        //code...
+        if($dom->loadHTMLFile("test.php")){
+            echo('noice');
+        }
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
+    
+    //$dom->validate();
+    $div = $dom->getElementById('test');
+    if($div!= null){
+        echo('nope');
+    }
+    //print_r($div);
+
+?>
+
+
 </body>
+
 </html>

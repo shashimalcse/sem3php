@@ -1,0 +1,8 @@
+[{"type":"Feature",
+"properties":{"name":"asdh"},
+"geometry":{"type":"Point",
+            "coordinates":["80.65010990368091","7.869463217882214"]
+            }
+},
+
+{"type":"Feature","properties":{"name":"lilil"},"geometry":{"type":"Point","coordinates":["79.861243","6.9270786"]}},{"type":"Feature","properties":{"name":"mvvbn"},"geometry":{"type":"Point","coordinates":["79.8612430","6.9270787"]}}]

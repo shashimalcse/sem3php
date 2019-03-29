@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,10 +12,10 @@
 
 <body>
     <form action="" method="post" enctype="multipart/form-data">
-        <input type="file" name= "userfile[]" id="image" accept = "image/*" multiple="" required>
+        <input type="file" name="userfile[]" id="image" accept="image/*" multiple="" required>
         <input type="submit" name="submit" value="Upload">
     </form>
-    
+
 
 
     <?php 
@@ -71,4 +72,5 @@
     
     ?>
 </body>
+
 </html>

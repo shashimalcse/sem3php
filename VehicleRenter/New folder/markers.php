@@ -38,9 +38,6 @@ function onGeoSuccess(event) {
     current_lat = event.coords.latitude;
     current_lng = event.coords.longitude;
     alert([current_lat,current_lng]);
-    
-
-
 }
 
 // If something has gone wrong with the geolocation request
@@ -48,11 +45,7 @@ function onGeoError(event) {
     alert("Error code " + event.code + ". " + event.message);
 }
 function initMap() {
-  getLocationConstant();
-     
-
-     
-     
+  getLocationConstant();     
  }
  function unhideFunction() {
   
