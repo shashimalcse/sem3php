@@ -14,15 +14,9 @@ window.onload = function () {
     var map = L.mapquest.map('map', {
         center: [6.9271510828, 79.845242500], //lat,long
         layers: L.mapquest.tileLayer('map'),
-        zoom: 5,
+        zoom: 8,
 
     });
-
-
-
-
-
-
 
     map.addControl(L.mapquest.geocodingControl({
         position: 'topright',
@@ -116,53 +110,76 @@ window.onload = function () {
         }
     }).addTo(map);
 
-    var oReq = new XMLHttpRequest(); //New request object
+   var coordinates ;
+    navigator.geolocation.getCurrentPosition(function(position) {
+         var latLng = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        };
+        coordinates=  latLng; 
+        
+        
+    },createCircle(coordinates.lat,coordinates.lng,1000));
     
+    var oReq = new XMLHttpRequest(); //New request object
     var myJSON = null;
+    
     oReq.onload = function () {
-
-        
         myJSON = JSON.parse(this.responseText);
-        //This is where you handle what to do with the response.
-        //The actual data is found on this.responseText
-        console.log(myJSON)
-        console.log(myJSON[0]);
-        myJSON.forEach(element => {
-            console.log(element);
-            
-        });
-        
-        
-        //console.log(myJSONOb);//Will alert: 42
-        
         var myLayer = L.geoJSON().addTo(map);
         
-        myLayer.addData(myJSON);
+
+        // myLayer.addData(myJSON);
+        var mark= L.marker([coordinates.lat,coordinates.lng],{
+            title:'this is ur current position',
+            riseOnHover:true,
+            riseOffset:500,
+        });
+        mark.addTo(myLayer);
+
+        //console.log(myJSON[0]["geometry"]["coordinates"]);
+        //createCircle(latLng.lat,latLng.lng,1000);
+        
+        $('#new').click(function(){
+            myLayer.remove();
+        });
+        //This is where you handle what to do with the response.
+        //The actual data is found on this.responseText
+        //console.log(myJSONOb);//Will alert: 42 
+        
 
     };
     oReq.open("get", "data.php", true);
-    //                               ^ Don't block the rest of the execution.
-    //                                 Don't wait until the request finishes to 
-    //                                 continue.
+    // Don't block the rest of the execution.Don't wait until the request finishes to  continue.                             
     oReq.send();
 
-    var geojsonFeature = {
-        "type": "Feature",
-        "properties": {
-            "name": "Coors Field",
-            "amenity": "Baseball Stadium",
-            "popupContent": "This is where the Rockies play!"
-        },
-        "geometry": {
-            "type": "Point",
-            "coordinates": [79.8612, 6.9270]
-
-        }
-    };
-    //alert(typeof geojsonFeature);
-
-
-
-
+    function createCircle(lat,lon,radius) {
+        L.circle([lat, lon], {radius: radius}).addTo(map);
+    }
+    
+    
+        
+       
+    
+    
+    
 
 };
+
+function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2-lat1);  // deg2rad below
+    var dLon = deg2rad(lon2-lon1); 
+    var a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2)
+      ; 
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    var d = R * c; // Distance in km
+    return d;
+  }
+  
+  function deg2rad(deg) {
+    return deg * (Math.PI/180)
+  }
