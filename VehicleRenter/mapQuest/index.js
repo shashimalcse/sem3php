@@ -110,16 +110,7 @@ window.onload = function () {
         }
     }).addTo(map);
 
-   var coordinates ;
-    navigator.geolocation.getCurrentPosition(function(position) {
-         var latLng = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-        };
-        coordinates=  latLng; 
-        
-        
-    },createCircle(coordinates.lat,coordinates.lng,1000));
+    // Geolocation to get positions.
     
     var oReq = new XMLHttpRequest(); //New request object
     var myJSON = null;
@@ -127,18 +118,47 @@ window.onload = function () {
     oReq.onload = function () {
         myJSON = JSON.parse(this.responseText);
         var myLayer = L.geoJSON().addTo(map);
+        //var myLayer = L.featureGroup().addTo(map);
+       
+        
         
 
-        // myLayer.addData(myJSON);
-        var mark= L.marker([coordinates.lat,coordinates.lng],{
+        myLayer.addData(myJSON);
+        var mark= L.marker([7.2513,80.3464],{
             title:'this is ur current position',
-            riseOnHover:true,
-            riseOffset:500,
+            properties:{
+                name : "first"
+            }
         });
-        mark.addTo(myLayer);
 
+
+        // myJSON.forEach(element => {
+        //     //console.log(element["properties"]["name"]);
+        //     var latlng = [element["geometry"]["coordinates"][1],element["geometry"]["coordinates"][0]];
+        //     var mk = L.marker(latlng,{
+        //         type:element['type'],
+        //         name:element["properties"]["name"],
+        //         title:element['properties']['title']
+
+        //     });
+        //     mk.addTo(myLayer);
+        // });
+        
+        //mark.addTo(myLayer);
+
+        myLayer.on("click",markerOnClick);
+        function markerOnClick(e){
+            var props = e.layer.feature.properties;
+            var geometry = e.layer.feature.geometry;
+            var type = e.layer.feature.type;
+            console.log(props);
+            console.log(geometry);
+            console.log(type);
+        }
+        
+        
         //console.log(myJSON[0]["geometry"]["coordinates"]);
-        //createCircle(latLng.lat,latLng.lng,1000);
+        
         
         $('#new').click(function(){
             myLayer.remove();

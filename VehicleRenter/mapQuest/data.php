@@ -7,9 +7,12 @@ function getData(){
     
     while($row = mysqli_fetch_array($result)){
         $renterDetails[] = array(
+
             'type'=>"Feature",
             'properties'=>array(
-                'name' => $row["username"]
+                'title' => "renter",
+                'name' => $row["username"]//can pass anything
+                
             ),
             'geometry'=>array(
                 'type'=>"Point",
