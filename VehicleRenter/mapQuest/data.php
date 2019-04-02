@@ -11,8 +11,8 @@ function getData(){
             'type'=>"Feature",
             'properties'=>array(
                 'title' => "renter",
-                'name' => $row["username"]//can pass anything
-                
+                'name' => $row["username"],//can pass anything
+                'first'=> "dsad"
             ),
             'geometry'=>array(
                 'type'=>"Point",
