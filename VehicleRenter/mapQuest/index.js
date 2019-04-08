@@ -9,6 +9,7 @@
 //     console.log(this.responseText);
 //   }
 window.onload = function () {
+
     L.mapquest.key = 'DVCBD2Ox8xqJfaPbtLgTMLBAHsWN6XbB';
 
     var map = L.mapquest.map('map', {
@@ -109,95 +110,114 @@ window.onload = function () {
             interactive: true,
         }
     }).addTo(map);
-    var checkB1 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="hotels" checked><label class="custom-control-label" for="hotels">Hotels</label></div>';
-    var checkB2 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="vehicles" checked><label class="custom-control-label" for="vehicles">Vehicles</label></div>';
+
+    var vehiclerenterLayer = L.geoJSON().addTo(map);
+    var hotelLayer = L.geoJSON().addTo(map);
+    var shopLayer =  L.geoJSON().addTo(map);
+
+    var vehiclerenterFetch = false;
+    var hotelFetch = false;
+    var shopsFetch = false;
+    //checkboxes
+    var checkB1 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="hotel" ><label class="custom-control-label" for="hotel">Hotels</label></div>';
+    var checkB2 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="vehiclerenter" ><label class="custom-control-label" for="vehiclerenter">Vehicles</label></div>';
     var checkB3 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="shops"><label class="custom-control-label" for="shops">Shops</label></div>';
     var checkbox = '<div class= "checkboxes">'+checkB1+checkB2+checkB3+'</div>';
     $(".options-control-container").append(checkbox);
-    //$(".options-control-container").append(checkB2);
-    //
-    // Geolocation to get positions.
+    
+    // Geolocation to get positions. need to implement this
+    //possible to use layer.filter
+    
+    
     $(".custom-control-input").change(function(){
         if(this.checked == true){
-            alert(this.id);
+            ifChecked(this.id);     
         }
+        //myLayer.addTo(map);
         else{
-
+            ifUnchecked(this.id);
         }
     });
-    $.ajax({
+    
+    function ifChecked(type){
+        switch (type) {
+            case "vehiclerenter":
+                if(vehiclerenterFetch==false){
+                    ajaxCall(type,vehiclerenterLayer);
+                    vehiclerenterFetch= true;
+                }
+                else{
+                    vehiclerenterLayer.addTo(map);
+                }   
+                break;
+                case "hotel":
+                if(hotelFetch==false){
+                    ajaxCall(type,hotelLayer);
+                    hotelFetch= true;
+                }
+                else{
+                    hotelLayer.addTo(map);
+                }   
+                break;
+    }
+    }
+    function ifUnchecked(type){
+        switch (type) {
+            case "vehiclerenter":
+                vehiclerenterLayer.remove();
+                break;
+        
+            case "hotel":
+                hotelLayer.remove();
+                break;
+        }
+    }
 
-        url: 'data.php',
-        
-        type: 'POST',
-        
-        data:'type='+'vehiclerenter',
-        
-        //async: true,
-        async: true,
-        
-        success: function (data) {
-            myJSON = JSON.parse(data);
-            var myLayer = L.geoJSON().addTo(map);
-            myLayer.addData(myJSON);
-            console.log(data);
+    function ajaxCall(type,layer){
+        $.ajax({
+
+            url: 'data.php',
             
-            console.log(JSON.parse(data));
-
-        //     var myLayer2 = L.geoJSON().addTo(map);
-        //     myLayer2.addData(JSON.stringify(data));
-        // alert(data);
-        
-        },
-        
-        });
-    // var oReq = new XMLHttpRequest(); //New request object
-    // var myJSON = null;
-
-    // oReq.onload = function () {
-    //     myJSON = JSON.parse(this.responseText);
-    //     var myLayer = L.geoJSON().addTo(map);
-    //     //var myLayer = L.featureGroup().addTo(map);
-    //     myLayer.addData(myJSON);
-    //     var mark = L.marker([7.2513, 80.3464], {
-    //         title: 'this is ur current position',
-    //         properties: {
-    //             name: "first"
-    //         }
-    //     });
-
-
-    //     myLayer.on("click", markerOnClick);
-    //     var props;
-    //     var geometry;
-    //     var type;
-    //     function markerOnClick(e) {
-
-
-    //         var div = $('<div/>');
-    //         div.append('Hello World!');
-    //         props = e.layer.feature.properties;
-    //         geometry = e.layer.feature.geometry;
-    //         type = e.layer.feature.type;
-    //         console.log(props);
-    //         console.log(geometry);
-    //         console.log(type);
-    //         $.dialog({
-    //             "body": div,
-    //             "title": "Details",
-    //             "show": true,
-    //             "modal": true
-    //         });
-
-    //     }
-        
-
-
-    // };
-    // oReq.open("get", "data.php", true);
-    // // Don't block the rest of the execution.Don't wait until the request finishes to  continue.                             
-    // oReq.send();
-
+            type: 'POST',
+            
+            data:'type='+type,
+            
+           
+            async: true,
+            
+            success: function (data) {
+                myJSON = JSON.parse(data);
+                
+                layer.addData(myJSON);
+                
+                //what to do when markers are clicked
+                layer.on("click", markerOnClick);
+                var props;
+                var geometry;
+                var type;
+            function markerOnClick(e) {
+    
+                //add here shop details
+                var div = $('<div/>');
+                div.append('Hello World!');
+                props = e.layer.feature.properties;
+                geometry = e.layer.feature.geometry;
+                type = e.layer.feature.type;
+                console.log(props);
+                console.log(geometry);
+                console.log(type);
+                $.dialog({
+                    "body": div,
+                    "title": "Details",
+                    "show": true,
+                    "modal": true
+                });
+    
+            }
+            },
+            
+            });
+    }
     function createCircle(lat, lon, radius) {
         L.circle([lat, lon], {
             radius: radius
@@ -229,4 +249,19 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 function deg2rad(deg) {
     return deg * (Math.PI / 180)
 }
+
+class type{
+    
+    get Layer(){
+        return this.Layer;
+    }
+    get Fetch(){
+        return this.Fetch;
+    }
+    Fetch(bool){
+        this.Fetch = bool;
+    }
+
+}
+
 

@@ -7,10 +7,10 @@ function getData($type){
     //$sql = "SELECT * FROM vehiclerenter";
     $sql = "SELECT * FROM $type";
     $result = mysqli_query($conn,$sql);
-    $renterDetails = array();
+    $details = array();
     
     while($row = mysqli_fetch_array($result)){
-        $renterDetails[] = array(
+        $details[] = array(
 
             'type'=>"Feature",
             'properties'=>array(
@@ -26,7 +26,7 @@ function getData($type){
         );
     };
 
-    return json_encode($renterDetails);
+    return json_encode($details);
     //json objedct is returned.
 }
 
