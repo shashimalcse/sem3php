@@ -98,9 +98,9 @@ session_start();
             // $image_name = addslashes($_FILES['image']['name']);
             // $image_size = getimagesize($_FILES['image']['tmp_name']);
 
-            $sql = "INSERT INTO hotels (username,hotelName,noRooms, noBeds, price,facilities)
+            $sql = "INSERT INTO hotel (username,hotelName,noRooms, noBeds, price,facilities)
             VALUES ('$user','$hotelName','$noRooms', '$noBeds', '$price','$hotelDetails')";
-            
+            //there was some errrors in database table hotels????
             if ($conn->query($sql) === TRUE) {
                 $last_id = $conn->insert_id;
                 for($i=0;$i<count($file_array);$i++){

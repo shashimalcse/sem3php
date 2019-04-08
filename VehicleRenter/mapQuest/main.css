@@ -1,0 +1,9 @@
+.checkboxes{
+    position: relative;
+    padding: 2%;
+    width: 22%;
+    background: #fff;
+    border-radius: 5%;
+    box-shadow: 3px 3px 3px rgba(0,0,0,.2);
+    -webkit-backface-visibility: hidden;
+}

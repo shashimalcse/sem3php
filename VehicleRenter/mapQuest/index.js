@@ -109,84 +109,94 @@ window.onload = function () {
             interactive: true,
         }
     }).addTo(map);
-
+    var checkB1 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="hotels" checked><label class="custom-control-label" for="hotels">Hotels</label></div>';
+    var checkB2 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="vehicles" checked><label class="custom-control-label" for="vehicles">Vehicles</label></div>';
+    var checkB3 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="shops"><label class="custom-control-label" for="shops">Shops</label></div>';
+    var checkbox = '<div class= "checkboxes">'+checkB1+checkB2+checkB3+'</div>';
+    $(".options-control-container").append(checkbox);
+    //$(".options-control-container").append(checkB2);
+    //
     // Geolocation to get positions.
-
-    var oReq = new XMLHttpRequest(); //New request object
-    var myJSON = null;
-
-    oReq.onload = function () {
-        myJSON = JSON.parse(this.responseText);
-        var myLayer = L.geoJSON().addTo(map);
-        //var myLayer = L.featureGroup().addTo(map);
-
-
-
-
-        myLayer.addData(myJSON);
-        var mark = L.marker([7.2513, 80.3464], {
-            title: 'this is ur current position',
-            properties: {
-                name: "first"
-            }
-        });
-
-
-        // myJSON.forEach(element => {
-        //     //console.log(element["properties"]["name"]);
-        //     var latlng = [element["geometry"]["coordinates"][1],element["geometry"]["coordinates"][0]];
-        //     var mk = L.marker(latlng,{
-        //         type:element['type'],
-        //         name:element["properties"]["name"],
-        //         title:element['properties']['title']
-
-        //     });
-        //     mk.addTo(myLayer);
-        // });
-
-        //mark.addTo(myLayer);
-
-        myLayer.on("click", markerOnClick);
-        var props ;
-        var geometry;
-        var type ;
-        function markerOnClick(e) {
-             props = e.layer.feature.properties;
-             geometry = e.layer.feature.geometry;
-             type = e.layer.feature.type;
-            console.log(props);
-            console.log(geometry);
-            console.log(type);
-            $.dialog({
-                "body": props.title+ "\n"+props.name,
-                "title": "Details",
-                "show": true,
-                "modal": true
-              });
-            
+    $(".custom-control-input").change(function(){
+        if(this.checked == true){
+            alert(this.id);
         }
-        // $('img').click(function () {
-        //     $.dialog({
-        //         "body": props.title+ "\n"+props.name,
-        //         "title": "Details",
-        //         "show": true
-        //       });
-            
-        // });
+        else{
 
-        //console.log(myJSON[0]["geometry"]["coordinates"]);
+        }
+    });
+    $.ajax({
 
-
+        url: 'data.php',
         
-        //This is where you handle what to do with the response.
-        //The actual data is found on this.responseText
-        //console.log(myJSONOb);//Will alert: 42 
+        type: 'POST',
+        
+        data:'type='+'vehiclerenter',
+        
+        //async: true,
+        async: true,
+        
+        success: function (data) {
+            myJSON = JSON.parse(data);
+            var myLayer = L.geoJSON().addTo(map);
+            myLayer.addData(myJSON);
+            console.log(data);
+            
+            console.log(JSON.parse(data));
+
+        //     var myLayer2 = L.geoJSON().addTo(map);
+        //     myLayer2.addData(JSON.stringify(data));
+        // alert(data);
+        
+        },
+        
+        });
+    // var oReq = new XMLHttpRequest(); //New request object
+    // var myJSON = null;
+
+    // oReq.onload = function () {
+    //     myJSON = JSON.parse(this.responseText);
+    //     var myLayer = L.geoJSON().addTo(map);
+    //     //var myLayer = L.featureGroup().addTo(map);
+    //     myLayer.addData(myJSON);
+    //     var mark = L.marker([7.2513, 80.3464], {
+    //         title: 'this is ur current position',
+    //         properties: {
+    //             name: "first"
+    //         }
+    //     });
 
 
-    };
-    oReq.open("get", "data.php", true);
-    // Don't block the rest of the execution.Don't wait until the request finishes to  continue.                             
-    oReq.send();
+    //     myLayer.on("click", markerOnClick);
+    //     var props;
+    //     var geometry;
+    //     var type;
+    //     function markerOnClick(e) {
+
+
+    //         var div = $('<div/>');
+    //         div.append('Hello World!');
+    //         props = e.layer.feature.properties;
+    //         geometry = e.layer.feature.geometry;
+    //         type = e.layer.feature.type;
+    //         console.log(props);
+    //         console.log(geometry);
+    //         console.log(type);
+    //         $.dialog({
+    //             "body": div,
+    //             "title": "Details",
+    //             "show": true,
+    //             "modal": true
+    //         });
+
+    //     }
+        
+
+
+    // };
+    // oReq.open("get", "data.php", true);
+    // // Don't block the rest of the execution.Don't wait until the request finishes to  continue.                             
+    // oReq.send();
 
     function createCircle(lat, lon, radius) {
         L.circle([lat, lon], {

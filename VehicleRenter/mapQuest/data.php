@@ -1,7 +1,11 @@
 <?php 
-function getData(){
+$type=$_POST['type'];
+
+function getData($type){
+
     include 'dB.php';
-    $sql = "SELECT * FROM vehiclerenter";
+    //$sql = "SELECT * FROM vehiclerenter";
+    $sql = "SELECT * FROM $type";
     $result = mysqli_query($conn,$sql);
     $renterDetails = array();
     
@@ -26,7 +30,7 @@ function getData(){
     //json objedct is returned.
 }
 
-echo(getData());
+echo(getData($type));
 
 //writing to file renter.json
 // $fileName= 'renter.json';
