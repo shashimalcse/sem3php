@@ -14,7 +14,7 @@ function getData($type){
 
             'type'=>"Feature",
             'properties'=>array(
-                'title' => "renter",
+                'title' => $type,
                 'name' => $row["username"],//can pass anything
                 'first'=> "dsad"
             ),

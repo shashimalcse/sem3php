@@ -59,6 +59,11 @@ body.dialog-no-scroll {
 .dialog-container.dynamic {
   top: 50%;
   left: 50%;
+  /* width added by me */
+  margin-left: -280px !important; 
+  margin-top: -250px !important;
+  width: 40%;
+  
 }
 .dialog-container .dialog-header {
   background-color: #4f537a;

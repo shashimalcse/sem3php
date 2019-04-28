@@ -7,3 +7,40 @@
     box-shadow: 3px 3px 3px rgba(0,0,0,.2);
     -webkit-backface-visibility: hidden;
 }
+
+.options-control-container{
+    margin-bottom: 3%;
+}
+
+.leaflet-fade-anim .leaflet-tile,.leaflet-zoom-anim .leaflet-zoom-animated { will-change:auto !important; 
+}
+
+.thumb-image {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 150px;
+}
+  
+  
+.thumb-image:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 50, 186, 0.5);
+}
+
+.image-holder {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
+.image-holder-dialog {
+    border: 2px solid #4e5378;
+    border-radius: 4px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    padding: 2%;
+  }
+
+.dialog-container.dynamic{
+    width: 50% !important;
+}

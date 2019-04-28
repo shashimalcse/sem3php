@@ -113,7 +113,7 @@ window.onload = function () {
 
     var vehiclerenterLayer = L.geoJSON().addTo(map);
     var hotelLayer = L.geoJSON().addTo(map);
-    var shopLayer =  L.geoJSON().addTo(map);
+    var shopLayer = L.geoJSON().addTo(map);
 
     var vehiclerenterFetch = false;
     var hotelFetch = false;
@@ -122,115 +122,151 @@ window.onload = function () {
     var checkB1 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="hotel" ><label class="custom-control-label" for="hotel">Hotels</label></div>';
     var checkB2 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="vehiclerenter" ><label class="custom-control-label" for="vehiclerenter">Vehicles</label></div>';
     var checkB3 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="shops"><label class="custom-control-label" for="shops">Shops</label></div>';
-    var checkbox = '<div class= "checkboxes">'+checkB1+checkB2+checkB3+'</div>';
+    var checkbox = '<div class= "checkboxes">' + checkB1 + checkB2 + checkB3 + '</div>';
     $(".options-control-container").append(checkbox);
-    
+    $(".options-control-container").attr("style", "margin-bottom:3%;");
+
     // Geolocation to get positions. need to implement this
     //possible to use layer.filter
-    
-    
-    $(".custom-control-input").change(function(){
-        if(this.checked == true){
-            ifChecked(this.id);     
+
+
+    $(".custom-control-input").change(function () {
+        if (this.checked == true) {
+            ifChecked(this.id);
         }
         //myLayer.addTo(map);
-        else{
+        else {
             ifUnchecked(this.id);
         }
     });
-    
-    function ifChecked(type){
+
+    function ifChecked(type) {
         switch (type) {
             case "vehiclerenter":
-                if(vehiclerenterFetch==false){
-                    ajaxCall(type,vehiclerenterLayer);
-                    vehiclerenterFetch= true;
-                }
-                else{
+                if (vehiclerenterFetch == false) {
+                    ajaxCall(type, vehiclerenterLayer);
+                    vehiclerenterFetch = true;
+                } else {
                     vehiclerenterLayer.addTo(map);
-                }   
-                break;
-                case "hotel":
-                if(hotelFetch==false){
-                    ajaxCall(type,hotelLayer);
-                    hotelFetch= true;
                 }
-                else{
-                    hotelLayer.addTo(map);
-                }   
                 break;
+            case "hotel":
+                if (hotelFetch == false) {
+                    ajaxCall(type, hotelLayer);
+                    hotelFetch = true;
+                } else {
+                    hotelLayer.addTo(map);
+                }
+                break;
+        }
     }
-    }
-    function ifUnchecked(type){
+
+    function ifUnchecked(type) {
         switch (type) {
             case "vehiclerenter":
                 vehiclerenterLayer.remove();
                 break;
-        
+
             case "hotel":
                 hotelLayer.remove();
                 break;
         }
     }
 
-    function ajaxCall(type,layer){
+    function ajaxCall(type, layer) {
         $.ajax({
 
             url: 'data.php',
-            
+
             type: 'POST',
-            
-            data:'type='+type,
-            
-           
+            //passing variable to php
+            data: 'type=' + type,
+
             async: true,
-            
+
             success: function (data) {
                 myJSON = JSON.parse(data);
-                
                 layer.addData(myJSON);
-                
                 //what to do when markers are clicked
                 layer.on("click", markerOnClick);
-                var props;
-                var geometry;
-                var type;
-            function markerOnClick(e) {
-    
-                //add here shop details
-                var div = $('<div/>');
-                div.append('Hello World!');
-                props = e.layer.feature.properties;
-                geometry = e.layer.feature.geometry;
-                type = e.layer.feature.type;
-                console.log(props);
-                console.log(geometry);
-                console.log(type);
-                $.dialog({
-                    "body": div,
-                    "title": "Details",
-                    "show": true,
-                    "modal": true
-                });
-    
-            }
+
             },
-            
-            });
+
+        });
     }
+    var props;
+    var geometry;
+    var type;
+
+    function markerOnClick(e) {
+
+        //add here shop details
+        var div = $('<div id="markerDetails"/>');
+        
+        props = e.layer.feature.properties;
+        geometry = e.layer.feature.geometry;
+        type = e.layer.feature.type;
+        console.log(props.name);
+        console.log(geometry);
+        console.log(type);
+        $.dialog({
+            "body": div,
+            "title": "Details",
+            "show": true,
+            "modal": true
+        });
+        ajaxVehicleRenter("" + props.name);
+
+    }
+
+    function ajaxVehicleRenter(username) {
+        $.ajax({
+
+            url: 'vehicleData.php',
+
+            type: 'POST',
+            //passing variable to php
+            data: 'user=' + username,
+
+            async: true,
+
+            success: function (data) {
+                
+                recievedData = JSON.parse(data);
+                console.log(recievedData);
+
+               
+                recievedData.forEach(element => {
+
+                    image_holder = $("<div class=image-holder-dialog>");
+                    $("#markerDetails").append(image_holder);
+                    $("<p><b>Type : </b>"+element.type+"</p>").appendTo(image_holder);
+                    $("<p><b>Model : </b>"+element.model+"</p>").appendTo(image_holder);
+                    (element.files).forEach(el => {
+                        
+                        img_src=element.directory+el;
+                        
+                        $("<img />", {
+                            "src": img_src,
+                            "class": "thumb-image",
+                            "style": "width:50%"
+                        }).appendTo(image_holder);
+                    });
+                    $("<p><b>Details : </b>"+element.details+"</p>").appendTo(image_holder);
+                });
+                console.log(recievedData);
+
+
+            },
+
+        });
+    }
+
     function createCircle(lat, lon, radius) {
         L.circle([lat, lon], {
             radius: radius
         }).addTo(map);
     }
-
-
-
-
-
-
-
-
 };
 
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
@@ -250,18 +286,16 @@ function deg2rad(deg) {
     return deg * (Math.PI / 180)
 }
 
-class type{
-    
-    get Layer(){
+class type {
+
+    get Layer() {
         return this.Layer;
     }
-    get Fetch(){
+    get Fetch() {
         return this.Fetch;
     }
-    Fetch(bool){
+    Fetch(bool) {
         this.Fetch = bool;
     }
 
 }
-
-

@@ -49,7 +49,9 @@ session_start();
                 
                 if($current_user==$row["username"]){
                     //echo "<h2>"."id: " . $row["vehicleID"]. " - username: " . $row["username"]. "  model- " . $row["model"]."  ____vehicleType- " . $row["vehicleType"]. $row["details"]."</h1>"."<br>";
-                    $directory = 'files/'.$current_user.'/'.$row["vehicleID"]."_".$row["model"].'/';
+                    //$directory = 'files/'.$current_user.'/'.$row["vehicleID"]."_".$row["model"].'/';
+                    //added new folder vehicles to user folder
+                    $directory = 'files/'.$current_user.'/Vehicles/'.$row["vehicleID"]."_".$row["model"].'/';
                     array_push($directory_arry,$directory);
                     array_push($vehicle_arry,$row["model"]);
                 }
