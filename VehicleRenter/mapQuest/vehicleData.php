@@ -1,7 +1,9 @@
 <?php
 $user = $_POST['user'];
+$title = $_POST['title'];
 
-function getData($user)
+
+function getData($user,$title)
 {
     include 'dB.php';
     //$sql = "SELECT * FROM vehiclerenter";
@@ -26,7 +28,7 @@ function getData($user)
             // array_push($vehicle_arry,$row["model"]);
 
             $details[] = array(
-
+                'title'=>$title,
                 'type'=>$row["vehicleType"],
                 'directory' => $directory,
                 'files'=>$img_files,
@@ -45,5 +47,5 @@ function getData($user)
     return json_encode($details);
     //json objedct is returned.
 };
-echo(getData($user));
+echo(getData($user,$title));
 ?>

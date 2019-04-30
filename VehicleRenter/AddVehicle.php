@@ -25,11 +25,6 @@ session_start();
         <a class="navbar-brand" href="#!">Sticky top</a>
     </nav>
 
-
-
-
-
-
     <div class="wrapper">
 
         <form method="post" enctype="multipart/form-data">
@@ -168,12 +163,6 @@ session_start();
                     }
                 }
 
-                
-
-
-
-
-
                 echo "New record created successfully. Last inserted ID is: " . $last_id;
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
@@ -181,14 +170,7 @@ session_start();
             
             $conn->close();
         }
-
-
-            
-
-            
-            
-            
-        
+       
         function reArrayFiles($file_post){
             $file_ary= array();
             $file_count = count($file_post['name']);
@@ -203,10 +185,6 @@ session_start();
             return $file_ary;
         }
        
-        
-
-        
-        
 
     ?>
 </body>

@@ -139,7 +139,7 @@ window.onload = function () {
             ifUnchecked(this.id);
         }
     });
-
+//checkboxes
     function ifChecked(type) {
         switch (type) {
             case "vehiclerenter":
@@ -206,7 +206,7 @@ window.onload = function () {
         props = e.layer.feature.properties;
         geometry = e.layer.feature.geometry;
         type = e.layer.feature.type;
-        console.log(props.name);
+        console.log(props);
         console.log(geometry);
         console.log(type);
         $.dialog({
@@ -215,52 +215,125 @@ window.onload = function () {
             "show": true,
             "modal": true
         });
-        ajaxVehicleRenter("" + props.name);
+        requestData(props.name,props.title,props.id);
+        //ajaxVehicleRenter(props.name,props.title);
 
     }
-
-    function ajaxVehicleRenter(username) {
+    function requestData(username,title,id){
         $.ajax({
 
-            url: 'vehicleData.php',
+            url: 'DataRequest.php',
 
             type: 'POST',
             //passing variable to php
-            data: 'user=' + username,
+            
+            data: {'user': username,'title': title,'id':id
+            },
+            
 
             async: true,
 
             success: function (data) {
-                
                 recievedData = JSON.parse(data);
                 console.log(recievedData);
+                switch (title) {
+                    case 'vehiclerenter':
+                        recievedData.forEach(element => {
 
-               
-                recievedData.forEach(element => {
+                            image_holder = $("<div class=image-holder-dialog>");
+                            $("#markerDetails").append(image_holder);
+                            $("<p><b>Type : </b>"+element.type+"</p>").appendTo(image_holder);
+                            $("<p><b>Model : </b>"+element.model+"</p>").appendTo(image_holder);
+                            (element.files).forEach(el => {
+                                
+                                img_src=element.directory+el;
+                                
+                                $("<img />", {
+                                    "src": img_src,
+                                    "class": "thumb-image",
+                                    "style": "width:50%"
+                                }).appendTo(image_holder);
+                            });
+                            $("<p><b>Details : </b>"+element.details+"</p>").appendTo(image_holder);
+                        });
+                        break;
+    
+                    case 'hotel':
+                        recievedData.forEach(element => {
 
-                    image_holder = $("<div class=image-holder-dialog>");
-                    $("#markerDetails").append(image_holder);
-                    $("<p><b>Type : </b>"+element.type+"</p>").appendTo(image_holder);
-                    $("<p><b>Model : </b>"+element.model+"</p>").appendTo(image_holder);
-                    (element.files).forEach(el => {
-                        
-                        img_src=element.directory+el;
-                        
-                        $("<img />", {
-                            "src": img_src,
-                            "class": "thumb-image",
-                            "style": "width:50%"
-                        }).appendTo(image_holder);
-                    });
-                    $("<p><b>Details : </b>"+element.details+"</p>").appendTo(image_holder);
-                });
-                console.log(recievedData);
-
-
+                            image_holder = $("<div class=image-holder-dialog>");
+                            $("#markerDetails").append(image_holder);
+                            $("<p><b>Hotel : </b>"+element.hotelName+"</p>").appendTo(image_holder);
+                            $("<p><b>Rooms : </b>"+element.rooms+"</p>").appendTo(image_holder);
+                            $("<p><b>Price : Rs.</b>"+element.price+"</p>").appendTo(image_holder);
+                            $("<p><b>Facilities : </b>"+element.facilities+"</p>").appendTo(image_holder);
+                            
+                            (element.files).forEach(el => {
+                                
+                                img_src=element.directory+el;
+                                
+                                $("<img />", {
+                                    "src": img_src,
+                                    "class": "thumb-image",
+                                    "style": "width:50%"
+                                }).appendTo(image_holder);
+                            });
+                            
+                        });
+                        break;
+                }
+                
             },
 
         });
+
     }
+    // function ajaxVehicleRenter(username,title) {
+    //     $.ajax({
+
+    //         url: 'vehicleData.php',
+
+    //         type: 'POST',
+    //         //passing variable to php
+    //         // data: 'user=' + username,
+    //         data: {'user': username,
+    //         'title': title
+    //             },
+            
+
+    //         async: true,
+
+    //         success: function (data) {
+                
+    //             recievedData = JSON.parse(data);
+    //             //console.log(recievedData);
+
+               
+    //             recievedData.forEach(element => {
+
+    //                 image_holder = $("<div class=image-holder-dialog>");
+    //                 $("#markerDetails").append(image_holder);
+    //                 $("<p><b>Type : </b>"+element.type+"</p>").appendTo(image_holder);
+    //                 $("<p><b>Model : </b>"+element.model+"</p>").appendTo(image_holder);
+    //                 (element.files).forEach(el => {
+                        
+    //                     img_src=element.directory+el;
+                        
+    //                     $("<img />", {
+    //                         "src": img_src,
+    //                         "class": "thumb-image",
+    //                         "style": "width:50%"
+    //                     }).appendTo(image_holder);
+    //                 });
+    //                 $("<p><b>Details : </b>"+element.details+"</p>").appendTo(image_holder);
+    //             });
+                
+
+
+    //         },
+
+    //     });
+    // }
 
     function createCircle(lat, lon, radius) {
         L.circle([lat, lon], {
