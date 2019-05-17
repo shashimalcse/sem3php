@@ -44,7 +44,7 @@ function getData($user,$title)
     };
     // array_push($json_arry,$directory_arry);
     // array_push($json_arry,$vehicle_arry);
-    return json_encode($details);
+    return ($details);
     //json objedct is returned.
 };
 echo(getData($user,$title));

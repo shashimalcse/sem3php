@@ -22,12 +22,12 @@ Interface Strategy{
 Class VehicleData implements Strategy{
     public function getData($user,$id){
         include_once 'dB.php';
-        $sql = "SELECT * FROM vehicles";
+        $sql = "SELECT * FROM vehicles WHERE username = '$user'";
         $result = mysqli_query($conn,$sql);
         $details = array();
         while($row = mysqli_fetch_array($result)){
             
-            if($user==$row["username"]){
+            // if($user==$row["username"]){
                 
                 $directory = '../files/'.$user.'/Vehicles/'.$row["id"]."_".$row["model"].'/';
                 $files = scandir($directory);
@@ -41,7 +41,7 @@ Class VehicleData implements Strategy{
                     'model'=> $row["model"],
                     
                 );
-            }
+            // }
         };
         
         return json_encode($details);
@@ -51,12 +51,12 @@ Class VehicleData implements Strategy{
 Class HotelData implements Strategy{
     public function getData($user,$id){
         include_once 'dB.php';
-        $sql = "SELECT * FROM hotel";
+        $sql = "SELECT * FROM hotel where id='$id'";
         $result = mysqli_query($conn,$sql);
         $details = array();
         while($row = mysqli_fetch_array($result)){
             
-            if($id==$row["id"]){
+            // if($id==$row["id"]){
                 
                 $directory = '../files/'.$user.'/Hotels/'.$row["id"]."_".$row["hotelName"].'/';
                 $files = scandir($directory);
@@ -70,7 +70,7 @@ Class HotelData implements Strategy{
                     'price' => $row["price"],
                     'facilities'=> $row["facilities"],     
                 );
-            }
+            // }
         };
         return json_encode($details);
     }

@@ -1,13 +1,4 @@
-//this is to use offline json file. IT works!!!
-// var jsonOb = null;
-// $.getJSON("renter.json", function (data) {
-//     jsonOb = data;
-//     console.log(jsonOb);
-// });
 
-// function reqListener () {
-//     console.log(this.responseText);
-//   }
 window.onload = function () {
 
     L.mapquest.key = 'DVCBD2Ox8xqJfaPbtLgTMLBAHsWN6XbB';
@@ -111,30 +102,64 @@ window.onload = function () {
         }
     }).addTo(map);
 
+    var circleArray = Array(); 
+    var desArray = Array();
+    //layers
     var vehiclerenterLayer = L.geoJSON().addTo(map);
-    var hotelLayer = L.geoJSON().addTo(map);
+    var hotelLayer  = L.geoJSON().addTo(map);
     var shopLayer = L.geoJSON().addTo(map);
+    var vehiclerenterLayerAll = L.geoJSON().addTo(map);
+    var hotelLayerAll = L.geoJSON().addTo(map);
+    var shopLayerAll = L.geoJSON().addTo(map);
+    
 
+    //check if already fetched.
     var vehiclerenterFetch = false;
     var hotelFetch = false;
     var shopsFetch = false;
+    var vehiclerenterFetchAll = false;
+    var hotelFetchAll = false;
+    var shopsFetchAll = false; 
+
     //checkboxes
-    var checkB1 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="hotel" ><label class="custom-control-label" for="hotel">Hotels</label></div>';
-    var checkB2 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="vehiclerenter" ><label class="custom-control-label" for="vehiclerenter">Vehicles</label></div>';
-    var checkB3 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="shops"><label class="custom-control-label" for="shops">Shops</label></div>';
+
+    var checkB1 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" name = "checkbox" id="hotel" ><label class="custom-control-label" for="hotel">Hotels</label> </div>';
+    var checkB2 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" name = "checkbox" id="vehiclerenter" ><label class="custom-control-label" for="vehiclerenter">Vehicles</label></div>';
+    var checkB3 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" name = "checkbox" id="shops"><label class="custom-control-label" for="shops">Shops</label></div>';
     var checkbox = '<div class= "checkboxes">' + checkB1 + checkB2 + checkB3 + '</div>';
-    $(".options-control-container").append(checkbox);
+    
+    var opB1 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="hotelAll" ><label class="custom-control-label" for="hotelAll">AllHotels</label> </div>';
+    var opB2 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="vehiclerenterAll" ><label class="custom-control-label" for="vehiclerenterAll">AllVehicles</label></div>';
+    var opB3 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="shopsAll"><label class="custom-control-label" for="shopsAll">AllShops</label></div>';
+
+    var opbox = '<div class= "opboxes">' + opB1 + opB2 + opB3 + '</div>';
+    var box = '<div>'+checkbox+opbox+'</div>';
+    $(".options-control-container").append(box);
     $(".options-control-container").attr("style", "margin-bottom:3%;");
+    //
 
-    // Geolocation to get positions. need to implement this
+    //remove this
+    // map.on('click', function(e) {
+    //     console.log(e.latlng);
+    // });
+    
+    
+
+    
+    //Geolocation to get positions. need to implement this
     //possible to use layer.filter
-
-
+    //remove a cuurent layer
+    $("#new").click(function(){
+        hotelLayer.clearLayers();
+        console.log("layer romeved");
+    });
+    // changed it to below one
     $(".custom-control-input").change(function () {
         if (this.checked == true) {
+            
             ifChecked(this.id);
         }
-        //myLayer.addTo(map);
+        
         else {
             ifUnchecked(this.id);
         }
@@ -151,14 +176,30 @@ window.onload = function () {
                 }
                 break;
             case "hotel":
-                if (hotelFetch == false) {
-                    ajaxCall(type, hotelLayer);
-                    hotelFetch = true;
+                if (hotelFetch == false) {    
+                        ajaxCall(type,hotelLayer);
+                        hotelFetch=true;
                 } else {
                     hotelLayer.addTo(map);
                 }
                 break;
-        }
+            case "vehiclerenterAll":
+                if (vehiclerenterFetchAll == false){
+                    ajaxCallAll("vehiclerenter", vehiclerenterLayerAll);
+                    vehiclerenterFetchAll = true;
+                } else {
+                    vehiclerenterLayerAll.addTo(map);
+                }
+                break;
+            case "hotelAll":
+                if(hotelFetchAll == false){
+                    ajaxCallAll("hotel",hotelLayerAll);
+                    hotelFetchAll = true;
+                }else{
+                    hotelLayerAll.addTo(map);
+                }
+                break;
+            }
     }
 
     function ifUnchecked(type) {
@@ -170,10 +211,19 @@ window.onload = function () {
             case "hotel":
                 hotelLayer.remove();
                 break;
+            
+            case "vehiclerenterAll":
+                vehiclerenterLayerAll.remove();
+                break;
+            
+            case "hotelAll":
+                hotelLayerAll.remove();
+                break;
         }
-    }
 
-    function ajaxCall(type, layer) {
+    }
+    function ajaxCallAll(type, layer) {
+        
         $.ajax({
 
             url: 'data.php',
@@ -185,30 +235,79 @@ window.onload = function () {
             async: true,
 
             success: function (data) {
+ 
                 myJSON = JSON.parse(data);
+                console.log(typeof myJSON);
                 layer.addData(myJSON);
-                //what to do when markers are clicked
+                
                 layer.on("click", markerOnClick);
 
             },
-
         });
     }
+
+    function addTodesArray(){
+        //creating destinations array and circles
+        var desArray = []; 
+        for (var key in map._layers) {
+            if(typeof map._layers[key]._iconContainer !== 'undefined'){
+                //need a array to store lan and lon
+                //check for conditions
+                desArray.push(map._layers[key]._latlng);
+                
+            }; 
+        };
+        //console.log(desArray);
+        //console.log(circleArray);
+        return desArray;
+        
+    }
+
+    function ajaxCall(type, layer) {
+        desArray = addTodesArray();
+        
+        // createCircle(map._layers[key]._latlng.lat,map._layers[key]._latlng.lng,10000);
+
+        $.ajax({
+
+            url: 'data.php',
+
+            type: 'POST',
+            //passing variable to php
+            data: 'type=' + type,
+
+            async: true,
+
+            success: function (data) {
+                
+                myJSON = JSON.parse(data);
+                filteredJSON = (checkWithinCircle(desArray,myJSON,10000));
+                layer.addData(filteredJSON);
+                layer.on("click", markerOnClick);
+           
+            },
+        });
+    }
+    function createCircle(lat, lon, radius) {
+        //radius in meters
+        circleArray.push(L.circle([lat, lon], {
+            radius: radius
+        }).addTo(map)) ;
+    }
+
+    
     var props;
     var geometry;
     var type;
-
+    
     function markerOnClick(e) {
 
         //add here shop details
         var div = $('<div id="markerDetails"/>');
-        
         props = e.layer.feature.properties;
         geometry = e.layer.feature.geometry;
         type = e.layer.feature.type;
-        console.log(props);
-        console.log(geometry);
-        console.log(type);
+        
         $.dialog({
             "body": div,
             "title": "Details",
@@ -229,7 +328,6 @@ window.onload = function () {
             
             data: {'user': username,'title': title,'id':id
             },
-            
 
             async: true,
 
@@ -333,15 +431,26 @@ window.onload = function () {
     //         },
 
     //     });
-    // }
-
-    function createCircle(lat, lon, radius) {
-        L.circle([lat, lon], {
-            radius: radius
-        }).addTo(map);
-    }
+    // }    
 };
-
+function checkWithinCircle(desArray,jsonData,radius){
+    filteredData = Array();
+    for (data in jsonData) {
+        lon = jsonData[data].geometry.coordinates[0];
+        lat= jsonData[data].geometry.coordinates[1];
+        
+        for (coord in desArray) {
+            
+            if(radius >= getDistanceFromLatLonInKm(lat,lon,desArray[coord].lat,desArray[coord].lng)){
+                
+                filteredData.push(jsonData[data]);
+                break;
+            }
+        }
+        
+    }
+    return filteredData;
+};
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     var R = 6371; // Radius of the earth in km
     var dLat = deg2rad(lat2 - lat1); // deg2rad below
@@ -352,7 +461,7 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
         Math.sin(dLon / 2) * Math.sin(dLon / 2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c; // Distance in km
-    return d;
+    return d*1000;//distance in meters
 }
 
 function deg2rad(deg) {
