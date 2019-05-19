@@ -32,14 +32,14 @@ window.onload = function () {
         directionsLayer: {
             startMarker: {
                 title: 'Drag to change location',
-                draggable: true,
+                draggable: false,
                 icon: 'marker-start',
                 iconOptions: {
                     size: 'sm'
                 }
             },
             endMarker: {
-                draggable: true,
+                draggable: false,
                 title: 'Drag to change location',
                 icon: 'marker-end',
                 iconOptions: {
@@ -139,20 +139,34 @@ window.onload = function () {
     //
 
     //remove this
-    map.on('click', function(e) {
+    // map.on('click', function(e) {
         
-        var temp = addTodesArray();
-        if(JSON.stringify(desArray) != JSON.stringify(temp) ){
-            console.log(temp);
-            desArray = temp;
-        }
+    //     var temp = addTodesArray();
+    //     if(JSON.stringify(desArray) != JSON.stringify(temp) ){
+    //         console.log(temp);
+    //         desArray = temp;
+    //     }
         
         
-    });
+    // });
     
     var observer = new MutationObserver(function(mutations) {
         var temp = addTodesArray();
-        console.log(temp);
+        if(JSON.stringify(desArray) != JSON.stringify(temp) ){
+            vehiclerenterFetch = false;
+            hotelFetch = false;
+            shopsFetch = false;
+            desArray = temp;
+            circleArray.forEach(el => {
+                el.remove();
+            });
+            desArray.forEach(crd => {
+            createCircle(crd.lat,crd.lng,10000);
+            });
+            //look for ticks and ajaxcall them again
+           
+            
+        }
         
        
           
@@ -283,6 +297,7 @@ window.onload = function () {
     }
 
     function ajaxCall(type, layer) {
+
         desArray = addTodesArray();
         
         // createCircle(map._layers[key]._latlng.lat,map._layers[key]._latlng.lng,10000);
@@ -300,6 +315,7 @@ window.onload = function () {
             success: function (data) {
                 
                 myJSON = JSON.parse(data);
+                //radius
                 filteredJSON = (checkWithinCircle(desArray,myJSON,10000));
                 layer.addData(filteredJSON);
                 layer.on("click", markerOnClick);
