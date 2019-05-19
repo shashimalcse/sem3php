@@ -139,11 +139,18 @@ window.onload = function () {
     //
 
     //remove this
-    // map.on('click drag', function(e) {
-    //     console.log(e.latlng);
-    // });
-
-    //input-container
+    map.on('click', function(e) {
+        //console.log(directionsControl);
+        //console.log(e);
+        var temp = addTodesArray();
+        if(JSON.stringify(desArray) != JSON.stringify(temp) ){
+            console.log(temp);
+            desArray = temp;
+        }
+        
+        
+    });
+    
     var observer = new MutationObserver(function(mutations) {
         var temp = addTodesArray();
         console.log(temp);
@@ -160,34 +167,6 @@ window.onload = function () {
       
       observer.observe(target, config);
 
-    // $("input[type='text']").change(function(e){
-    //     console.log(e);
-    //   });
-    
-    // map.on('click',function(){
-    //     if($('input[type="text"]').val() != ""){
-            
-    //         if($('input[type="text"]').val() != ""){
-    //             var temp = addTodesArray();
-    //             console.log(temp)
-    //             console.log(desArray)
-    //             if(JSON.stringify(desArray)  != JSON.stringify(temp) ){
-    //                 desArray = temp;
-                
-    //             }
-    //         }
-            
-            
-    //     }
-    // });
-
-    
-    // $('input[type="text"]').bind('input propertychange', function() {
-    //     console.log($(this).val());
-    //  });
-
-     
-    
     
     //Geolocation to get positions. need to implement this
     //possible to use layer.filter
@@ -196,6 +175,9 @@ window.onload = function () {
         hotelLayer.clearLayers();
         console.log("layer romeved");
     });
+
+
+
     // changed it to below one
     $(".custom-control-input").change(function () {
         if (this.checked == true) {
@@ -210,7 +192,6 @@ window.onload = function () {
 //checkboxes
     function ifChecked(type) {
         switch (type) {
-
             case "vehiclerenter":
                 if (vehiclerenterFetch == false) {
                     ajaxCall(type, vehiclerenterLayer);
@@ -281,7 +262,7 @@ window.onload = function () {
             success: function (data) {
  
                 myJSON = JSON.parse(data);
-                console.log(typeof myJSON);
+                //console.log(typeof myJSON);
                 layer.addData(myJSON);
                 
                 layer.on("click", markerOnClick);
@@ -293,14 +274,9 @@ window.onload = function () {
     function addTodesArray(){
         //creating destinations array and circles
         var desArray = []; 
-        for (var key in map._layers) {
-            if(typeof map._layers[key]._iconContainer !== 'undefined'){
-                //need a array to store lan and lon
-                //check for conditions
-                desArray.push(map._layers[key]._latlng);
-                
-            }; 
-        };
+        
+        for(var loc in directionsControl._locations){
+            desArray.push(directionsControl._locations[loc].displayLatLng)};
         //console.log(desArray);
         //console.log(circleArray);
         return desArray;
