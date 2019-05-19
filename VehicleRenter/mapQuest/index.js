@@ -140,8 +140,7 @@ window.onload = function () {
 
     //remove this
     map.on('click', function(e) {
-        //console.log(directionsControl);
-        //console.log(e);
+        
         var temp = addTodesArray();
         if(JSON.stringify(desArray) != JSON.stringify(temp) ){
             console.log(temp);
