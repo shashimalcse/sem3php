@@ -139,12 +139,55 @@ window.onload = function () {
     //
 
     //remove this
-    // map.on('click', function(e) {
+    // map.on('click drag', function(e) {
     //     console.log(e.latlng);
     // });
-    
-    
 
+    //input-container
+    var observer = new MutationObserver(function(mutations) {
+        var temp = addTodesArray();
+        console.log(temp);
+        
+       
+          
+      });
+  
+      // Let's configure the observer
+      var config = { childList: true, subtree:true, attributes: true, characterData: true,
+          characterDataOldValue: true, attributeOldValue: true };
+      
+      var target = document.getElementsByClassName("input-container")[0];
+      
+      observer.observe(target, config);
+
+    // $("input[type='text']").change(function(e){
+    //     console.log(e);
+    //   });
+    
+    // map.on('click',function(){
+    //     if($('input[type="text"]').val() != ""){
+            
+    //         if($('input[type="text"]').val() != ""){
+    //             var temp = addTodesArray();
+    //             console.log(temp)
+    //             console.log(desArray)
+    //             if(JSON.stringify(desArray)  != JSON.stringify(temp) ){
+    //                 desArray = temp;
+                
+    //             }
+    //         }
+            
+            
+    //     }
+    // });
+
+    
+    // $('input[type="text"]').bind('input propertychange', function() {
+    //     console.log($(this).val());
+    //  });
+
+     
+    
     
     //Geolocation to get positions. need to implement this
     //possible to use layer.filter
@@ -167,6 +210,7 @@ window.onload = function () {
 //checkboxes
     function ifChecked(type) {
         switch (type) {
+
             case "vehiclerenter":
                 if (vehiclerenterFetch == false) {
                     ajaxCall(type, vehiclerenterLayer);

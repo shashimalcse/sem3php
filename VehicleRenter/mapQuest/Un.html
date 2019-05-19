@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input id="new" value="">
+    <input>
+    <script>
+          // create an observer instance
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        console.log(mutation.type);        
+      });    
+    });
+
+    // Let's configure the observer
+    var config = { childList: true, subtree:true, attributes: true, characterData: true,
+        characterDataOldValue: true, attributeOldValue: true };
+    //Let's get a node.
+    var target = document.getElementById("new");
+    // Let's pass the target and configuration to the observe function.
+    observer.observe(target, config);
+
+
+
+    </script>
+</body>
+</html>
