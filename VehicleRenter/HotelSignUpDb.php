@@ -2,20 +2,8 @@
 session_start();
 ?>
 <?php
-    //conncet to database
     include 'dB.php'; 
-        // $servername = "localhost";
-        // $username = "root";
-        // $password = "";
-        // $dbname = "database_1";
-
-        // $conn = new mysqli($servername, $username, $password, $dbname);
-        // // Check connection
-        // if ($conn->connect_error) {
-        //         die("Connection failed: " . $conn->connect_error);
-        //         } 
-
-        
+    
         if(isset($_POST['mobile'])){
             $user = $_POST['username'];
             $firstName= $_POST['firstName'];

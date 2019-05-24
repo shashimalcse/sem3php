@@ -23,20 +23,6 @@ session_start();
     <?php
         include 'dB.php';
         
-
-        // //conncet to database
-        // $servername = "localhost";
-        // $username = "root";
-        // $password = "";
-        // $dbname = "database_1";
-        // $current_user = "fsfd";
-
-        // $conn = mysqli_connect($servername, $username, $password, $dbname);
-        // // Check connection
-        // if (!$conn) {
-        //         die("Connection failed: " . mysqli_connect_errno() ." ". mysqli_connect_error());
-        //         }
-        
         $sql = "SELECT * FROM vehicles";
         $result = mysqli_query($conn,$sql);
         $directory_arry=array();

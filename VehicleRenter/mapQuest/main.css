@@ -47,13 +47,20 @@
     margin-bottom: 2%;
   }
 .image-holder-dialog {
-    border: 2px solid #4e5378;
+    border: 1px solid #b0b1b4;
     border-radius: 4px;
     margin-top: 2%;
     margin-bottom: 2%;
     padding: 2%;
   }
-
+  .carousel.slide{
+    border: 2px solid #4e53784d;
+    border-radius: 4px;
+    height: 304px;
+  }
 .dialog-container.dynamic{
-    width: 50% !important;
+    /* width: 50% !important; */
 }
+.line-break {
+    width: 100%;
+  }

@@ -4,7 +4,6 @@ session_start();
 
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Hotel Sign Up</title>
@@ -21,7 +20,7 @@ session_start();
         <div class="container">
             <h1>Hotel SignUp</h1>
             <br><br>
-        </div>
+    </div>
 
         <div class="form">
             <form method="post" action="HotelSignUpDb.php">
@@ -42,7 +41,7 @@ session_start();
                 <input type="text" name="address" id="address" class="form-control">
                 <br>
                 <br>
-                <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                
                 Location:
                 <button type="button" name="getLocation" class="btn btn-primary" onclick="unhideFunction()">Get
                     location</button>
@@ -50,9 +49,7 @@ session_start();
 
                 <div id="hideLocation" class="mapcontainer" style="display: none;">
                     <div class="row">
-                        <div id="dvMap" style="width: 500px; height: 500px; margin-left: 2%;
-  margin-right: 2%;
-  margin-top: 2%;">
+                        <div id="dvMap" style="width: 500px; height: 500px; margin-left: 2%; margin-right: 2%;margin-top: 2%;">
                         </div>
                     </div><br><br>
                     <div class="row">
@@ -75,41 +72,27 @@ session_start();
                                 </div>
                             </div>
                         </div>
-
-
-
-
                     </div>
-
                 </div>
 
-
-                <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
-
-
-
                 <label for="email">Email: </label>
-
                 <input type="email" name="email" id="email" size="50" class="form-control">
                 <br>
                 <label for="mobile">Mobile: </label>
-                <input type="text" name="mobile" id="mobile" size="20" placeholder="+94-*********" class="form-control"
-                    required>
-
+                <input type="text" name="mobile" id="mobile" size="20" placeholder="+94-*********" class="form-control"required>
                 <br>
                 <input type="submit" name="insert" id="insert" value="Submit" class="btn btn-outline-primary">
-
-
-
             </form>
         </div>
         <br><br>
 
     </div>
-    <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    
+    <script async defer src="https://maps.googleapis.com/maps/api/js?keyAIzaSyBByZ9yBJHULD6Va0HlE_vNvfRUvohhxNQ&callback=initMap">
+    </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 
-    <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
     <script type="text/javascript">
     function getLocationConstant() {
         if (navigator.geolocation) {
@@ -170,18 +153,9 @@ session_start();
             divelement.style.display = 'block';
     }
     </script>
-    <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?keyAIzaSyBByZ9yBJHULD6Va0HlE_vNvfRUvohhxNQ&callback=initMap">
-    </script>
+    
 
-
-
-
-    <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+    
 
     <script>
     $(document).ready(function() {

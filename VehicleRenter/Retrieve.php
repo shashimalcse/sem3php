@@ -1,16 +1,6 @@
 <?php 
 include 'dB.php';
-//conncet to database
-// $servername = "localhost";
-// $username = "root";
-// $password = "";
-// $dbname = "database_1";
 
-// $conn = new mysqli($servername, $username, $password, $dbname);
-// // Check connection
-// if ($conn->connect_error) {
-//         die("Connection failed: " . $conn->connect_error);
-//         }
 
 if ($conn->query($sql) === TRUE) {
     $last_id = $conn->insert_id;
