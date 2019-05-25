@@ -101,24 +101,6 @@ window.onload = function () {
         }
     }).addTo(map);
 
-    //460*700
-    var rightSidebar = L.control.sidebar('sidebar-right', {
-        position: 'right',
-        closeButton: true,
-        autoPan:false,
-        
-    });
-    map.addControl(rightSidebar);
-    
-
-
-    // setTimeout(function () {
-    //     rightSidebar.toggle();
-    // }, 2000);
-
-    
-
-
     var circleArray = Array();
     var desArray = Array();
     //layers
@@ -370,16 +352,18 @@ window.onload = function () {
     function markerOnClick(e) {
 
         //add here shop details
-        
+        var div = $('<div id="markerDetails" />');
         props = e.layer.feature.properties;
         geometry = e.layer.feature.geometry;
         type = e.layer.feature.type;
 
-        rightSidebar.hide();
-        $("#sidebar-right-content").empty();
+        $.dialog({
+            "body": div,
+            "title": "DETAILS",
+            "show": true,
+            "modal": true
+        });
         requestData(props.name, props.title, props.id);
-        rightSidebar.show();
-
         //ajaxVehicleRenter(props.name,props.title);
 
     }
@@ -406,62 +390,50 @@ window.onload = function () {
                 switch (title) {
                     case 'vehiclerenter':
                         recievedData.forEach(element => {
-                            image_holder = $("<div class='img-holder'>");
-                            $("#sidebar-right-content").append(image_holder);
-                            $("<pre class='text-secondary'><b>Type : </b>"+element.type+"</pre>").appendTo(image_holder);
-                            $("<pre class='text-secondary'><b>Modal : </b>"+element.model+"</pre>").appendTo(image_holder);
-                            //can change width and height 
-                            foto = $(`<div class="fotorama" data-width="100%"
-                                data-height="250" data-auto="false"
-                                data-allowfullscreen="true"
-                                ></div>`);
-                            image_holder.append(foto);
 
-
+                            image_holder = $("<div class=image-holder-dialog>");
+                            $("#markerDetails").append(image_holder);
+                            $("<p><b>Type : </b>" + element.type + "</p>").appendTo(image_holder);
+                            $("<p><b>Model : </b>" + element.model + "</p>").appendTo(image_holder);
                             (element.files).forEach(el => {
 
-                                img_src = JSON.stringify(element.directory + el) ;
-                                foto.append(`<img src=${img_src} >`);
-                                
-                            });
+                                img_src = element.directory + el;
 
-                            $("<pre class='text-secondary'><b>Facilities : </b>"+element.details+"</pre>").appendTo(image_holder);
-                           
+                                $("<img />", {
+                                    "src": img_src,
+                                    "class": "thumb-image",
+                                    "style": "width:33.3%;height:150px"
+                                }).appendTo(image_holder);
+                            });
+                            $("<p><b>Details : </b>" + element.details + "</p>").appendTo(image_holder);
                         });
-                        $('.fotorama').fotorama();
                         break;
 
                         case 'hotel':
                             recievedData.forEach(element => {
-                                
-                                image_holder = $("<div class='img-holder'>");
-                                $("#sidebar-right-content").append(image_holder);
+
+                                image_holder = $("<div class=image-holder-dialog>");
+                                $("#markerDetails").append(image_holder);
                                 $("<pre class='text-secondary'><b>Hotel : </b>"+element.hotelName+"</pre>").appendTo(image_holder);
                                 $("<pre class='text-secondary'><b>Rooms : </b>"+element.rooms+"</pre>").appendTo(image_holder);
                                 $("<pre class='text-secondary'><b>Price : Rs.</b>"+element.price+"</pre>").appendTo(image_holder);
                                 $("<pre class='text-secondary'><b>Facilities : </b>"+element.facilities+"</pre>").appendTo(image_holder);
+                                
+                            (element.files).forEach(el => {
 
-                                foto = $(`<div class="fotorama" data-width="100%"
-                                data-height="250" data-auto="false"
-                                data-allowfullscreen="true"
-                                ></div>`);
-                                image_holder.append(foto);
 
-                                (element.files).forEach(el => {
-                                    img_src = JSON.stringify(element.directory + el) ;
-                                    foto.append(`<img src=${img_src} >`);
-                                    
-                                    
 
-                                });
-                            
-                           
+                                img_src=element.directory+el;
+
+                                $("<img />", {
+                                    "src": img_src,
+                                    "class": "thumb-image",
+                                    "style": "width:33.3%;height:150px"
+                                }).appendTo(image_holder);
+                            });
+
                         });
-                        $('.fotorama').fotorama();
-                    
-                          
                         break;
-                        
                     
                    
 

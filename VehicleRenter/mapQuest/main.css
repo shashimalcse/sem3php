@@ -53,14 +53,32 @@
     margin-bottom: 2%;
     padding: 2%;
   }
-  .carousel.slide{
+  /* .carousel.slide{
     border: 2px solid #4e53784d;
     border-radius: 4px;
     height: 304px;
-  }
+  } */
 .dialog-container.dynamic{
+    
+    width: 800px !important; 
     /* width: 50% !important; */
 }
 .line-break {
     width: 100%;
-  }
+}
+.fotorama{
+  border-top: 1px solid #d4d4d4;
+  border-bottom: 1px solid #d4d4d4;
+  padding-top: 10px;
+}
+.img-holder{
+  box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+  padding: 2px;
+    
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-radius: 4px;
+  margin-bottom: 7px;
+}
+
+  
