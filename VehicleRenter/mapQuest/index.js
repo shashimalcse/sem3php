@@ -149,6 +149,7 @@ window.onload = function () {
     var opB2 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="vehiclerenterAll" ><label class="custom-control-label" for="vehiclerenterAll">AllVehicles</label></div>';
     var opB3 = '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="shopsAll"><label class="custom-control-label" for="shopsAll">AllShops</label></div>';
 
+    
     var opbox = '<div class= "opboxes">' + opB1 + opB2 + opB3 + '</div>';
     var box = '<div>' + checkbox + opbox + '</div>';
     $(".options-control-container").append(box);
