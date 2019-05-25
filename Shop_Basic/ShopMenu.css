@@ -1,0 +1,42 @@
+body {font-family: Arial, Helvetica, sans-serif;
+    background-image: url("https://wallpaperplay.com/walls/full/5/3/c/195358.jpg");
+     background-size: cover
+     }
+    *{box-sizing: border-box}
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: rgb(10, 195, 252);
+    overflow: hidden;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .topnav a {
+    float: left;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* Change the color of links on hover */
+  .topnav a:hover {
+    background-color: rgb(251, 255, 10);
+    color: black;
+  }
+  
+  /* Add a color to the active/current link */
+  .topnav a.active {
+    background-color: rgb(248, 248, 248);
+    color: rgb(0, 0, 0);
+  }
+  .container2 {
+    text-align:justify;
+    border-radius: 5px;
+    background-color: #f2f2f29c;
+    padding: 20px;
+    width: 20%
+    }
+  
+  
+  
