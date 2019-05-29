@@ -1,0 +1,249 @@
+<!-- <?php
+session_start();
+?> -->
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="ShopSignup.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="ErrorHandle.js"></script>
+    <!-- <script >
+        function Errorcheck()                                    
+{ 
+    var name = document.forms["RegForm"]["UserName"];               
+    var email = document.forms["RegForm"]["email"];    
+    var phone = document.forms["RegForm"]["number"];  
+    var what =  document.forms["RegForm"]["ShopName"];  
+	var type =  document.forms["RegForm"]["Type"]; 
+	var lat =  document.forms["RegForm"]["shopLatitude"];
+	var lng =  document.forms["RegForm"]["shopLongitude"];
+  
+   
+    if (name.value == "")                                  
+    { 
+        window.alert("Please enter your name."); 
+        name.focus(); 
+        return false; 
+    } 
+   
+
+       
+    if (email.value == "")                                   
+    { 
+        window.alert("Please enter a valid e-mail address."); 
+        email.focus(); 
+        return false; 
+    } 
+   
+    if (email.value.indexOf("@", 0) < 0)                 
+    { 
+        window.alert("Please enter a valid e-mail address."); 
+        email.focus(); 
+        return false; 
+    } 
+   
+    if (email.value.indexOf(".", 0) < 0)                 
+    { 
+        window.alert("Please enter a valid e-mail address."); 
+        email.focus(); 
+        return false; 
+    } 
+   
+    if (phone.value == "")                           
+    { 
+        window.alert("Please enter your telephone number."); 
+        phone.focus(); 
+        return false; 
+    } 
+    
+    if (what.value == "")                           
+    { 
+        window.alert("Please enter a Shop name."); 
+        what.focus(); 
+        return false; 
+    } 	
+	
+    if (type.value == "")                           
+    { 
+        window.alert("Please select a Shop type."); 
+        type.focus(); 
+        return false; 
+    }
+
+	if (lat.value == "")                           
+    { 
+        window.alert("Please click Getlocation and then Current Position."); 
+        lat.focus(); 
+        return false; 
+    }
+
+	if (lng.value == "")                           
+    { 
+        window.alert("Please click Getlocation and then Current Position."); 
+        lng.focus(); 
+        return false; 
+    }	
+   
+    return true; 
+}
+    </script> -->
+  
+</head>
+<body>
+    <div class="container">
+        <div class="text-center">
+            <h1>Shop Owner SignUp</h1>
+            <br><br>
+        </div>
+
+    <div align="center">
+        <div class="container2">
+            <form   name="RegForm" action = "shop.php" onsubmit="return Errorcheck()" method="POST" enctype="multipart/form-data" >
+			<fieldset>
+            <label for="Image"><b>Upload Image</b></label><br>
+            <input type="file" name="image" id="image" accept="image/*" multiple="true" required><br><br>
+            <div id = "image-holder" class="image-holder" style="display:none;"></div>
+        
+            <label for="UserName"><b>Full Name</b></label><br>
+            <input type="text" placeholder="Enter Username" name="UserName"><br>
+
+            <label for="email"><b>Email</b></label><br>
+            <input type="email" placeholder="Enter Email" name="email"><br><br>
+
+            <label for="number"><b>Mobile Number</b></label><br>
+            <input type="tel" placeholder="Enter Mobile Number" name="number"><br><br>
+
+            <label for="ShopName"><b>Shop Name</b></label><br>
+            <input type="text" placeholder="Enter Shopname" name="ShopName"><br><br>
+
+            <label for="geolocation"><b>Geolocation</b></label><br><br>
+            <button type="button" name="getLocation" class="btn btn-primary" onclick="unhideFunction()">Getlocation</button>
+            <br><br>
+
+            <div id="hideLocation" class="mapcontainer" style="display: none;">
+                <div class="row">
+                    <div id="dvMap" style="width: 500px; height: 500px; margin-left: auto;margin-right: auto;">
+                    </div>
+                </div><br><br>
+                <div class="row" style="display: block; margin-left: 50%;margin-right: 50%;>
+                    <div class="locationColumn">
+                        <div class="header-marker">
+                            <div class="col-md-5 signupbox" >
+                                <div class="form-group">
+                                    <input type="number" step="any" id="Latitude" name="shopLatitude"class="location" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" step="any" id="Longitude" name="shopLongitude"class="location" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="button" class="btn btn-primary" value="Current Position"onclick="getLocationConstant()" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+      
+            <br><label for="type"><b>Shop Type</b></label><br>
+            <p>    
+                <select type="text" value="" name="Type">
+					<option></option>
+                    <option>Grocery</option> 
+                    <option>Retail</option> 
+                    <option>Clothes</option> 
+                    <option>Bakery</option> 
+                </select></p><br><br> 
+            <!-- <textarea id="desc" name="desc" placeholder="Write a description about your shop" style="height:90px"></textarea><br> -->
+
+            <input id="submit" type="submit" name="submit" value="Submit" class="btn btn-success" >
+            </fieldset>
+			</form>
+        
+        </div>
+    </div>
+    <!-- <script type="text/javascript">
+        document.getElementById("submit").onclick = function () {
+            location.href = "ShopMenu.php";
+        };
+    </script> -->
+    <script type="text/javascript">
+        function getLocationConstant() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError);
+            } else {
+                alert("Your browser or device doesn't support Geolocation");
+            }
+        }
+        // If we have a successful location update
+        function onGeoSuccess(event) {
+            document.getElementById("Latitude").value = event.coords.latitude;
+            document.getElementById("Longitude").value = event.coords.longitude;
+        }
+        // If something has gone wrong with the geolocation request
+        function onGeoError(event) {
+            alert("Error code " + event.code + ". " + event.message);
+        }
+        function initMap() {
+            var mapOptions = {
+                center: new google.maps.LatLng(7.927818456366202, 80.67881188707315),
+                zoom: 8,
+            };
+            var infoWindow = new google.maps.InfoWindow();
+            var latlngbounds = new google.maps.LatLngBounds();
+            var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+            var marker = new google.maps.Marker({
+                position: {
+                    lat: 7.927818456366202,
+                    lng: 80.67881188707315
+                },
+                map: map
+            });
+            google.maps.event.addListener(map, 'click', function(e) {
+                marker.setMap(null);
+                var geo = {
+                    lat: e.latLng.lat(),
+                    lng: e.latLng.lng()
+                };
+                marker = new google.maps.Marker({
+                    position: geo,
+                    map: map
+                });
+                document.getElementById("Latitude").value = e.latLng.lat();
+                document.getElementById("Longitude").value = e.latLng.lng();
+            });
+        }
+        function unhideFunction() {
+            var divelement = document.getElementById("hideLocation");
+            if (divelement.style.display == 'none')
+                divelement.style.display = 'block';
+        }
+        </script>
+       
+        <script async defer
+            src="https://maps.googleapis.com/maps/api/js?keyAIzaSyBByZ9yBJHULD6Va0HlE_vNvfRUvohhxNQ&callback=initMap">
+        </script>
+    
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+    
+        <script>
+        $(document).ready(function() {
+            function disableBack() {
+                window.history.forward()
+            }
+            window.onload = disableBack();
+            window.onpageshow = function(evt) {
+                if (evt.persisted) disableBack()
+            }
+        });
+        </script>
+   
+</body>
+</html> 
